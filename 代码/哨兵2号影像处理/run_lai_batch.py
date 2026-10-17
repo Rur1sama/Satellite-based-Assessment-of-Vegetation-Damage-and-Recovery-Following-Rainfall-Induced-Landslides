@@ -17,20 +17,25 @@ import rasterio
 
 
 # ==================== 配置区域 ====================
-# SNAP gpt.exe 绝对路径。
-GPT_PATH = r"D:\esa-snap\bin\gpt.exe"
+# SNAP Graph Processing Tool: set SNAP_GPT_PATH if `gpt` is not on PATH.
+GPT_PATH = os.environ.get("SNAP_GPT_PATH", "gpt")
 
-# SNAP Graph XML 模板路径。
-TEMPLATE_XML = r"E:\SNAP_base\SR2_LAI_cal\Graphs\myBiophysical10mOp.xml"
+# The shared graph configuration is kept with this module; override it with SNAP_GRAPH_XML if needed.
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+MODULE_DIR = Path(__file__).resolve().parent
+TEMPLATE_XML = os.environ.get(
+    "SNAP_GRAPH_XML",
+    str(MODULE_DIR / "SNAP_base" / "Graphs" / "myBiophysical10mOp.xml"),
+)
 
-# Sentinel-2 L2A 原始数据目录。
-INPUT_DIR = r"E:\Raster_data\Sentinel-2\韶关市江湾镇\L2A_raw"
+# Sentinel-2 L2A files are not bundled; place them in this example input folder.
+INPUT_DIR = str(PROJECT_ROOT / "Input" / "EcologicalAnalysis" / "ExampleData" / "Sentinel2L2A")
 
-# SNAP 多波段 Biophysical 输出目录。
-OUTPUT_DIR = r"E:\python_base\Slide_dect\Output\SNAP_Results\Biophysical"
+# SNAP multiband intermediate outputs.
+OUTPUT_DIR = str(PROJECT_ROOT / "Output" / "EcologicalProducts" / "SNAP_Multiband")
 
-# 单波段 LAI/FVC/FAPAR 输出目录。
-SINGLE_BAND_OUTPUT_DIR = r"E:\python_base\Slide_dect\Output\SNAP_Results\Biophysical_SingleBand"
+# Final single-band LAI/FVC/FAPAR products are written under this directory.
+SINGLE_BAND_OUTPUT_DIR = str(PROJECT_ROOT / "Output" / "EcologicalProducts")
 
 # SNAP Biophysical10mOp 的 GeoTIFF band 顺序。现有 tif 没有 band description，因此这里显式固定。
 # 注意：SNAP UI 和 BiophysicalVariable 枚举顺序均为 LAI -> FAPAR -> FVC/FCOVER。

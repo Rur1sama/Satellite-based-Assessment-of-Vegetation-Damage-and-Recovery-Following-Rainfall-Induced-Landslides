@@ -17,13 +17,13 @@ from rasterio.enums import Resampling
 from rasterio.vrt import WarpedVRT
 
 
-ROOT = Path(r"E:\python_base\Slide_dect")
-RAW_L2A_DIR = Path(r"E:\Raster_data\Sentinel-2\韶关市江湾镇\L2A_raw")
-SNAP_RESULTS_DIR = ROOT / "Output" / "SNAP_Results"
-BIOPHYSICAL_DIR = SNAP_RESULTS_DIR / "Biophysical"
-SINGLE_BAND_DIR = SNAP_RESULTS_DIR / "Biophysical_SingleBand"
+ROOT = Path(__file__).resolve().parents[2]
+RAW_L2A_DIR = ROOT / "Input" / "EcologicalAnalysis" / "ExampleData" / "Sentinel2L2A"
+SNAP_RESULTS_DIR = ROOT / "Output" / "EcologicalProducts"
+BIOPHYSICAL_DIR = SNAP_RESULTS_DIR / "SNAP_Multiband"
+SINGLE_BAND_DIR = SNAP_RESULTS_DIR
 LAI_SINGLE_DIR = SINGLE_BAND_DIR / "LAI"
-DID_DIR = ROOT / "Output" / "EcoService_DID"
+DID_DIR = ROOT / "Output" / "EcologicalAnalysis"
 AUDIT_DIR = DID_DIR / "06_snap_lai_qc_audit"
 
 VAR_BANDS = {"LAI": 1, "FAPAR": 3, "FVC": 5}

@@ -10,6 +10,7 @@ Description   : catboost shap
 """
 
 import os
+from pathlib import Path
 import glob
 import gc
 import joblib
@@ -23,7 +24,7 @@ from catboost import Pool
 # =========================================================
 # 路径配置
 # =========================================================
-BASE_DIR = r"E:\python_base\Slide_dect\Output\ML_Results\CatBoost"
+BASE_DIR = str(Path(__file__).resolve().parents[3] / "Output" / "TrainingResults" / "Legacy" / "CatBoost")
 MODEL_DIR = os.path.join(BASE_DIR, "Saved_Models")
 DATA_DIR = os.path.join(BASE_DIR, "Training_Data_CSVs")
 SHAP_OUT_DIR = os.path.join(BASE_DIR, "SHAP_Plots")

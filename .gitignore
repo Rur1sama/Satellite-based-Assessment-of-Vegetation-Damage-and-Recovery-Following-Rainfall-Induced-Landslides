@@ -1,5 +1,21 @@
-/Output/
-/Input/
+# Keep only the interpreted training polygons in the code repository.
+# Other input folders contain documentation/examples only; raw source data
+# should be deposited or distributed separately.
+/Input/Training/ExampleData/**
+!/Input/Training/ExampleData/
+!/Input/Training/ExampleData/**/
+!/Input/Training/ExampleData/**/README.md
+/Input/EcologicalAnalysis/ExampleData/**
+!/Input/EcologicalAnalysis/ExampleData/
+!/Input/EcologicalAnalysis/ExampleData/**/
+!/Input/EcologicalAnalysis/ExampleData/**/README.md
+/Input/EcologicalAnalysis/WorkingCache/
+
+# Large ecological rasters are staged for the separate data release, not Git.
+/Output/EcologicalProducts/**
+!/Output/EcologicalProducts/README.md
+/Output/TrainingResults/
+/Output/EcologicalAnalysis/
 /ultralytics-main/
 /weights/
 /杂项/

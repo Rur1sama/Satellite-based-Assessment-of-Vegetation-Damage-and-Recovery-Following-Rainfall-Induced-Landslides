@@ -1,19 +1,19 @@
 {
-  "project_root": "E:/python_base/Slide_dect",
-  "output_dir": "E:/python_base/Slide_dect/Output/EcoService_DID",
+  "project_root": "../..",
+  "output_dir": "../../Output/EcologicalAnalysis",
   "analysis_crs": null,
-  "study_area_path": "E:/python_base/Slide_dect/Input/Jiangwan/Jiangwan.shp",
+  "study_area_path": "../../Input/EcologicalAnalysis/ExampleData/StudyArea/study_area_boundary.shp",
   "skip_missing_rasters": true,
   "landslide": {
     "mask_threshold": 0.8,
     "connectivity": 8,
     "min_landslide_area_m2": 100, 
-    "events_output": "E:/python_base/Slide_dect/Output/EcoService_DID/01_landslide_events.gpkg",
-    "glob_pattern": "E:/python_base/Slide_dect/Output/ML_Results/Ensemble_Final/Ensemble_Final_{year_pre}-{year_post}.tif",
+    "events_output": "../../Output/EcologicalAnalysis/01_landslide_events.gpkg",
+    "glob_pattern": "../../Output/LandslideProducts/Data/annual_probability_maps/landslide_probability_{year_pre}_{year_post}.tif",
     "year_pairs": ["18-19", "19-20", "20-21", "21-22", "22-23", "23-24", "24-25"]
   },
   "zones": {
-    "zones_output": "E:/python_base/Slide_dect/Output/EcoService_DID/02_landslide_zones.gpkg",
+    "zones_output": "../../Output/EcologicalAnalysis/02_landslide_zones.gpkg",
     "spillover_rings_m": [
       [0, 10],
       [10, 20]
@@ -29,7 +29,7 @@
   "outcomes": {
     "LAI_SR2": {
       "enabled": true,
-      "glob_pattern": "E:/python_base/Slide_dect/Output/SNAP_Results/Biophysical_SingleBand/LAI/LAI_{year}????_*_*_*_S2*_10m.tif",
+      "glob_pattern": "../../Output/EcologicalProducts/LAI/LAI_{year}????_*.tif",
       "year_regex": "LAI_(\\d{4})\\d{4}_.*_S2.*_10m\\.tif$",
       "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
       "band": 1,
@@ -39,7 +39,7 @@
     },
     "FVC": {
       "enabled": true,
-      "glob_pattern": "E:/python_base/Slide_dect/Output/SNAP_Results/Biophysical_SingleBand/FVC/FVC_{year}????_*_*_*_S2*_10m.tif",
+      "glob_pattern": "../../Output/EcologicalProducts/FVC/FVC_{year}????_*.tif",
       "year_regex": "FVC_(\\d{4})\\d{4}_.*_S2.*_10m\\.tif$",
       "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
       "band": 1,
@@ -49,7 +49,7 @@
     },
     "FAPAR": {
       "enabled": false,
-      "glob_pattern": "E:/python_base/Slide_dect/Output/SNAP_Results/Biophysical_SingleBand/FAPAR/FAPAR_{year}????_*_*_*_S2*_10m.tif",
+      "glob_pattern": "../../Output/EcologicalProducts/FAPAR/FAPAR_{year}????_*.tif",
       "year_regex": "FAPAR_(\\d{4})\\d{4}_.*_S2.*_10m\\.tif$",
       "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
       "band": 1,
@@ -59,7 +59,7 @@
     },
     "GPP": {
       "enabled": true,
-      "glob_pattern": "E:/python_base/Slide_dect/Input/反演GPP/GPP_{year}????_existing_epsilon_kgC_m2_day.tif",
+      "glob_pattern": "../../Output/EcologicalProducts/GPP/GPP_{year}????_existing_epsilon_kgC_m2_day.tif",
       "year_regex": "GPP_(\\d{4})\\d{4}_existing_epsilon_kgC_m2_day\\.tif$",
       "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
       "band": 1,
@@ -72,7 +72,7 @@
     },
     "VOD": {
       "enabled": false,
-      "path_template": "E:/python_base/Slide_dect/Input/VOD/VOD_{year}.tif",
+      "path_template": "../../Input/EcologicalAnalysis/ExampleData/VOD/VOD_{year}.tif",
       "years": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021],
       "band": 1,
       "scale": 1.0,
@@ -81,8 +81,8 @@
     }
   },
   "panel": {
-    "panel_output": "E:/python_base/Slide_dect/Output/EcoService_DID/03_zone_outcome_panel.csv",
-    "extraction_cache_dir": "E:/python_base/Slide_dect/Output/EcoService_DID/03_zone_outcome_panel_outcome_year_cache",
+    "panel_output": "../../Output/EcologicalAnalysis/03_zone_outcome_panel.csv",
+    "extraction_cache_dir": "../../Output/EcologicalAnalysis/03_zone_outcome_panel_outcome_year_cache",
     "use_cache": true,
     "incremental_on_force": false,
     "all_touched": false,
@@ -93,7 +93,7 @@
     "skip_radiation_profiles": false
   },
   "did": {
-    "results_dir": "E:/python_base/Slide_dect/Output/EcoService_DID/04_did_results",
+    "results_dir": "../../Output/EcologicalAnalysis/04_did_results",
     "value_column": "mean",
     "reference_relative_year": -1,
     "event_window": [-2, 5],
@@ -111,13 +111,13 @@
     "radiation_post_years": [0, 1, 2]
   },
   "plots": {
-    "figures_dir": "E:/python_base/Slide_dect/Output/EcoService_DID/05_figures",
+    "figures_dir": "../../Output/EcologicalAnalysis/05_figures",
     "legacy_dashboards": false,
     "plot_relative_years": [-2, -1, 0, 1, 2, 3, 4, 5],
     "area_size_figures": []
   },
   "recovery": {
-    "slope_raster_path": "E:/python_base/Slide_dect/Output/Slope.tif",
+    "slope_raster_path": "../../Input/EcologicalAnalysis/ExampleData/Terrain/slope.tif",
     "slope_all_touched": false
   },
   "core_size_comparison":

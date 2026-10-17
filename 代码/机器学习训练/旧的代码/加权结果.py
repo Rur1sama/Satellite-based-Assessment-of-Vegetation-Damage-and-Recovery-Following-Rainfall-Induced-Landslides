@@ -11,6 +11,7 @@ Description   : 加权模型计算结果
 #!/usr/bin/env python
 # coding=utf-8
 import os
+from pathlib import Path
 import rasterio
 import numpy as np
 import matplotlib.pyplot as plt
@@ -20,11 +21,11 @@ from pyproj import Transformer
 # 1. 集成配置
 # =========================================================
 # 定义各模型预测结果的根目录
-BASE_DIR = r"E:\python_base\Slide_dect\Output\ML_Results"
+BASE_DIR = str(Path(__file__).resolve().parents[3] / "Output" / "TrainingResults" / "Legacy")
 CONFIG = {
     "MODELS": {
-        "LightGBM": os.path.join(BASE_DIR, "lightBGM"),
-        "Random Forest": os.path.join(BASE_DIR, "Random Forest"),
+        "LightGBM": os.path.join(BASE_DIR, "LightGBM"),
+        "Random Forest": os.path.join(BASE_DIR, "RandomForest"),
         "XGBoost": os.path.join(BASE_DIR, "XGBoost"),
         "CatBoost": os.path.join(BASE_DIR, "CatBoost")
     },

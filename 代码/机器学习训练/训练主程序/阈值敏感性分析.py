@@ -17,10 +17,10 @@ from shapely.geometry import shape
 from sklearn.metrics import confusion_matrix
 
 
-PROJECT_ROOT = Path(r"E:\python_base\Slide_dect")
-ENSEMBLE_DIR = PROJECT_ROOT / "Output" / "ML_Results" / "Ensemble_Final"
-EVALUATION_DIR = ENSEMBLE_DIR / "Ensemble_Evaluation"
-STUDY_AREA_PATH = PROJECT_ROOT / "Input" / "Jiangwan" / "Jiangwan.shp"
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+ENSEMBLE_DIR = PROJECT_ROOT / "Output" / "LandslideProducts" / "Data" / "annual_probability_maps"
+EVALUATION_DIR = PROJECT_ROOT / "Output" / "TrainingResults" / "Ensemble_Evaluation"
+STUDY_AREA_PATH = PROJECT_ROOT / "Input" / "Training" / "ExampleData" / "StudyArea" / "study_area_boundary.shp"
 
 YEAR_PAIRS = ("18-19", "19-20", "20-21", "21-22", "22-23", "23-24", "24-25")
 OOF_FILES = {
@@ -296,7 +296,7 @@ def run_threshold_sensitivity_analysis():
         threshold_annual_rows = []
 
         for year_pair in YEAR_PAIRS:
-            probability_path = ENSEMBLE_DIR / f"Ensemble_Final_{year_pair}.tif"
+            probability_path = ENSEMBLE_DIR / f"landslide_probability_{year_pair.replace('-', '_')}.tif"
             if not probability_path.exists():
                 raise FileNotFoundError(f"找不到年度概率图: {probability_path}")
 

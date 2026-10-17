@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import numpy as np
 import rasterio
 from rasterio.features import shapes
@@ -64,8 +65,10 @@ def tif_2_shp(tif_path, shp_path, threshold=0.8, min_pixels=4):
     print(f"[✓] 转换完成！Shapefile 已成功保存至:\n    {shp_path}")
 
 if __name__ == "__main__":
-    # 配置你的路径
-    INPUT_TIF = r"E:\python_base\Slide_dect\应用\资兴市\Output\Inference_Results\Final_Ensemble_Landslide_23-24.tif"
-    OUTPUT_SHP = r"E:\python_base\Slide_dect\应用\资兴市\Output\Inference_Results\Final_Ensemble_Landslide_23-24.shp"
+    # Example conversion for one annual map; paths are relative to the repository.
+    project_root = Path(__file__).resolve().parents[1]
+    input_tif = project_root / "Output" / "LandslideProducts" / "Data" / "annual_probability_maps" / "landslide_probability_23_24.tif"
+    output_shp = project_root / "Output" / "LandslideProducts" / "ConvertedVectors" / "landslide_patches_23_24.shp"
+    output_shp.parent.mkdir(parents=True, exist_ok=True)
     
-    tif_2_shp(INPUT_TIF, OUTPUT_SHP, threshold=0.8, min_pixels=4)
+    tif_2_shp(str(input_tif), str(output_shp), threshold=0.8, min_pixels=4)

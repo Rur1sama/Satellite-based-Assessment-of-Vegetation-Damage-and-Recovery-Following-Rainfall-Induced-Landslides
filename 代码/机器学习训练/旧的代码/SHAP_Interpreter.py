@@ -10,6 +10,7 @@ Description   : lightGBM shap解释
 """
 
 import os
+from pathlib import Path
 import glob
 import joblib
 import pandas as pd
@@ -22,7 +23,7 @@ import gc
 # =========================
 # 路径配置 (完全同步 训练1.py)
 # =========================
-BASE_DIR = r"E:\python_base\Slide_dect\Output\ML_Results\lightBGM"
+BASE_DIR = str(Path(__file__).resolve().parents[3] / "Output" / "TrainingResults" / "Legacy" / "LightGBM")
 MODEL_DIR = os.path.join(BASE_DIR, "Saved_Models")
 DATA_DIR = os.path.join(BASE_DIR, "Training_Data_CSVs") # 训练1.py 中的 TRAIN_DATA_DIR
 SHAP_OUT_DIR = os.path.join(BASE_DIR, "SHAP_Plots")

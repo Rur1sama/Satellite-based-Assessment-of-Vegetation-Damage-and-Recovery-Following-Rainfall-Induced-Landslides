@@ -1,65 +1,139 @@
-﻿# 滑坡生态服务 DID 分析代码
+# Ecological-impact and recovery analysis | 生态影响与恢复分析
 
-这套代码用于把年度滑坡掩膜和 LAI/GPP/VOD 栅格组织成面板数据，并估计滑坡对植被的直接破坏、周边缓冲区破坏辐射范围、事件研究恢复轨迹和滑坡前异常信号。
+This module estimates landslide-associated changes in FVC, LAI and GPP and summarizes post-landslide recovery. Its configuration and outputs are kept separate from the model-training workflow.
 
-## 核心思路
+本模块用于估计滑坡相关的 FVC、LAI 和 GPP 变化，并汇总滑坡后的恢复情况。配置文件和分析结果与模型训练部分分开放置。
 
-代码没有使用传统双向固定效应 DID，而是用更适合交错事件的组-时间 ATT：
+## Workflow | 分析流程
 
-`ATT(g, t) = [滑坡年份为 g 的区域在 t 与 g-1 的变化] - [同期尚未滑坡或稳定控制区域的变化]`
+1. **Prepare the ecological inputs.** Ensure that the required FVC, LAI and GPP rasters are available in `Output/EcologicalProducts/`. If the Sentinel-2-derived LAI or FVC products need to be regenerated, run the SNAP workflow described below before starting the analysis. | **准备生态分析输入。** 确认 `Output/EcologicalProducts/` 中已有分析所需的 FVC、LAI 和 GPP 栅格。若需重新生成基于 Sentinel-2 的 LAI 或 FVC 产品，请先按下文说明运行 SNAP 流程。
+2. **Map analysis units (`events`).** Convert the annual landslide probability maps into mapped landslide patches using the configured threshold. | **生成滑坡分析单元（`events`）。** 按配置的概率阈值，将年度滑坡概率图转换为滑坡斑块。
+3. **Define impact and reference areas (`zones`).** Build the landslide cores, nearby buffer zones and reference areas used in the analysis. | **划定影响区和参考区（`zones`）。** 生成滑坡核心区、邻近缓冲区和分析所需的参考区域。
+4. **Extract ecological measurements (`panel`).** Summarize FVC, LAI and GPP for each analysis unit and year. | **提取生态指标（`panel`）。** 汇总各分析单元逐年的 FVC、LAI 和 GPP。
+5. **Estimate changes and make figures (`did`, `plots`).** Compare changes in landslide-affected areas with reference trends, then produce summary tables and figures, including the size and recovery analyses configured for this project. | **估计变化并生成图件（`did`、`plots`）。** 将滑坡影响区的变化与参考趋势比较，再输出汇总表和图件，包括配置的规模差异及恢复分析。
 
-这样做的作用是扣除同一年气候、区域背景变化等共同扰动，估计“如果这里没有发生滑坡，本来应该怎样”的反事实。
+## Data locations | 数据位置
 
-## 文件结构
+```text
+Input/EcologicalAnalysis/ExampleData/
+├── StudyArea/study_area_boundary.shp (+ companion files)
+└── Terrain/slope.tif
 
-- `config_example.json`：路径、年份、缓冲区、DID 参数配置。
-- `run_pipeline.py`：一键运行入口。
-- `ecoservice_analysis/events.py`：把 7 个年度滑坡 mask tif 转成滑坡事件面。
-- `ecoservice_analysis/zones.py`：生成滑坡体内部、外部缓冲带和远距离稳定控制带。
-- `ecoservice_analysis/panel.py`：提取每个空间单元每年的 LAI/GPP/VOD 均值。
-- `ecoservice_analysis/did.py`：组-时间 DID 和事件研究估计。
-- `ecoservice_analysis/summaries.py`：破坏辐射范围、可选恢复阈值和前兆信号汇总。
-- `ecoservice_analysis/plotting.py`：输出事件研究、辐射范围、生态损失和 cohort 追踪图。
+Output/
+├── LandslideProducts/Data/
+│   └── annual_probability_maps/landslide_probability_<pair>.tif
+└── EcologicalProducts/
+    ├── FVC/FVC_<date>_*.tif
+    ├── LAI/LAI_<date>_*.tif
+    ├── FAPAR/FAPAR_<date>_*.tif
+    └── GPP/GPP_<date>_existing_epsilon_kgC_m2_day.tif
+```
 
-## 使用步骤
+Place the study-area boundary and slope raster at the example paths. The ecological rasters and landslide probability maps are already staged in the project. The example configuration uses FVC, LAI and GPP; FAPAR and VOD are disabled by default. Edit `config_example.json` if you change file locations or enable another indicator.
 
-1. 复制或直接修改 `config_example.json`。
-2. 把 `landslide.masks` 中 7 个滑坡掩膜路径改成你的真实 tif。
-3. 把 `outcomes` 中 LAI、GPP、VOD 的 `path_template` 改成真实年度栅格路径。
-4. 在当前目录运行：
+研究区边界和坡度栅格需放在上述路径。生态指标栅格与滑坡概率图已暂存于项目中。示例配置启用 FVC、LAI 和 GPP；FAPAR 与 VOD 默认关闭。如需更改文件位置或启用其他指标，请编辑 `config_example.json`。
+
+## Upstream Sentinel-2 products | Sentinel-2 上游产品
+
+This analysis pipeline reads precomputed FVC, LAI and GPP rasters; it does not run SNAP itself. To regenerate the Sentinel-2-derived LAI, FVC or FAPAR products, place the source scenes in `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/` and run `python "代码\哨兵2号影像处理\run_lai_batch.py"` from the repository root. The SNAP graph and project settings now reside with the image-processing code at `代码/哨兵2号影像处理/SNAP_base/`; the batch script uses `SNAP_base/Graphs/myBiophysical10mOp.xml` by default. See the [Sentinel-2 processing guide](../哨兵2号影像处理/README.md) for setup and outputs.
+
+本分析流程直接读取预先生成的 FVC、LAI 和 GPP 栅格，不会自行调用 SNAP。若需重新反演 Sentinel-2 的 LAI、FVC 或 FAPAR，请将原始影像放入 `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`，并在仓库根目录运行 `python "代码\哨兵2号影像处理\run_lai_batch.py"`。SNAP 图和项目参数现统一保存在影像处理代码目录 `代码/哨兵2号影像处理/SNAP_base/` 中；批处理脚本默认调用 `SNAP_base/Graphs/myBiophysical10mOp.xml`。环境配置和输出说明见 [Sentinel-2 影像处理指南](../哨兵2号影像处理/README.md)。
+
+## Command-line help | 命令行帮助
+
+Run commands from this directory after installing the project dependencies:
+
+安装依赖后，在当前目录运行：
+
+```powershell
+python run_pipeline.py --help
+```
+
+The command-line interface defined by `run_pipeline.py` is:
+
+`run_pipeline.py` 中定义的命令行选项如下：
+
+```text
+usage: run_pipeline.py [-h] [--config CONFIG] [--steps STEPS [STEPS ...]] [--force]
+
+Run landslide ecosystem-service DID analysis.
+
+options:
+  -h, --help            show this help message and exit
+  --config CONFIG       Path to JSON config.
+  --steps STEPS [STEPS ...]
+                        Steps to run: all, events, zones, panel, did, plots.
+  --force               Force recomputation instead of using cached intermediate files.
+```
+
+`--config` defaults to the `config_example.json` beside the script, and `--steps` defaults to `all`. Use one or more stage names after `--steps`; `--force` recomputes intermediate results instead of reusing cached files.
+
+`--config` 默认指向脚本同目录下的 `config_example.json`；`--steps` 默认是 `all`。`--steps` 后可填写一个或多个阶段名称；添加 `--force` 可强制重新计算中间结果，而不复用缓存。
+
+## Run | 运行
+
+Run the complete workflow:
+
+运行完整流程：
 
 ```powershell
 python run_pipeline.py --config config_example.json --steps all
 ```
 
-也可以分步运行：
+Run selected stages (later stages may require outputs from earlier stages):
+
+仅运行指定阶段（后续阶段可能依赖前序阶段的输出）：
 
 ```powershell
 python run_pipeline.py --config config_example.json --steps events zones panel did plots
 ```
 
-## 输出结果
+Force recomputation:
 
-默认输出到 `E:/python_base/Slide_dect/Output/EcoService_DID`：
+强制重新计算：
 
-- `01_landslide_events.gpkg`：滑坡事件矢量面，每个连通斑块一个事件。
-- `02_landslide_zones.gpkg`：滑坡体、0-20m、20-50m 等缓冲区和稳定控制带。
-- `03_zone_outcome_panel.csv`：面板数据，后续所有 DID 都基于它。
-- `04_did_results/group_time_att.csv`：每个滑坡年份组、每个相对年份的 ATT。
-- `04_did_results/event_study_att.csv`：按相对年份汇总后的事件研究结果。
-- `04_did_results/radiation_range_summary.csv`：每个结果变量在灾后年份的最大显著破坏距离。
-- `05_figures`：图件。
+```powershell
+python run_pipeline.py --config config_example.json --steps panel did plots --force
+```
 
-## 关键参数建议
+## Code map | 代码结构
 
-- `spillover_rings_m`：10m Sentinel-2 LAI 建议从 `[0,20]`、`[20,50]`、`[50,100]` 开始；MODIS GPP/VOD 分辨率较粗，缓冲区需要更大才稳定。
-- `control_group`：默认 `not_yet_plus_never`，同时使用“尚未滑坡区域”和远距离稳定控制带；如果想更贴近采矿论文的 not-yet-treated 设计，改成 `not_yet`。
-- `reference_relative_year`：默认 `-1`，即滑坡发生前一年作为基准。
-- `event_year`：18-19 掩膜默认记为 2019 年发生，19-20 记为 2020 年，以此类推。
+```text
+生态服务分析/
+├── run_pipeline.py                 # Workflow entry point and command-line options
+├── config_example.json              # Input, output and analysis settings
+├── calculate_daily_gpp_vpm.py      # Daily GPP estimation utility
+└── ecoservice_analysis/
+    ├── events.py                    # Annual probability rasters to mapped patches
+    ├── zones.py                     # Impact and reference zones
+    ├── panel.py                     # Annual ecological indicator extraction
+    ├── did.py                       # Change estimation
+    ├── core_size.py                 # Small- and large-landslide analysis
+    ├── recovery_figures.py          # Recovery summaries and figures
+    ├── area_response.py             # Area-level response summaries
+    ├── summaries.py                 # Summary tables
+    ├── plotting.py                  # General analysis plots
+    ├── individual_diagnostics.py    # Diagnostics for individual units
+    ├── binning.py                   # Grouping utilities
+    ├── io_utils.py                  # Path and file utilities
+    ├── config.py                    # Configuration loading
+    └── head.py / __init__.py        # Shared imports and module initialization
+```
 
-## 结果怎么解释
+## Outputs | 输出
 
-- `att < 0`：滑坡造成了额外 LAI/GPP/VOD 损失。
-- 某个缓冲区在灾后 `rel_year = 0,1,2` 显著为负：说明破坏辐射到该距离。
-- event-study ATT 在 `rel_year = 0` 后逐渐回到 0：表示 DID 校正后的生态功能恢复过程。
-- 灾前 `rel_year < 0` 已显著为负：可能是失稳前植被胁迫或水分异常信号，也可能表示平行趋势不充分，需要谨慎解释。
+Results are written under `Output/EcologicalAnalysis/`:
+
+分析结果写入 `Output/EcologicalAnalysis/`：
+
+- `01_landslide_events.gpkg` — mapped landslide patches.
+- `02_landslide_zones.gpkg` — impact and reference areas.
+- `03_zone_outcome_panel.csv` — extracted annual indicator values.
+- `04_did_results/` — change estimates and summary tables.
+- `05_figures/` — figures and visual summaries.
+
+- `01_landslide_events.gpkg`：滑坡斑块矢量数据。
+- `02_landslide_zones.gpkg`：影响区和参考区。
+- `03_zone_outcome_panel.csv`：提取的年度指标值。
+- `04_did_results/`：变化估计和汇总表。
+- `05_figures/`：图件和可视化汇总。

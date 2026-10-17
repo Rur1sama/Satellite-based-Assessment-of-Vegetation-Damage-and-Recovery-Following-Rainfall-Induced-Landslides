@@ -1,0 +1,8 @@
+# Landslide products
+
+`Data/` contains the current local release-staging products:
+
+- `Data/landslide_event_inventory.gpkg`: mapped landslide-patch inventory for image pairs 2018–2019 to 2024–2025 (4,429 mapped patches; nominal occurrence years 2019–2025).
+- `Data/annual_probability_maps/landslide_probability_18_19.tif` through `landslide_probability_24_25.tif`: seven equal-weight ensemble probability rasters.
+
+The inventory was derived using a probability threshold of 0.8, eight-neighbour connectivity and a minimum patch area of 100 m². These are mapped products, not a field-verified census. The directory is a local staging area; confirm redistribution rights, licence, authorship and dataset metadata before public release.

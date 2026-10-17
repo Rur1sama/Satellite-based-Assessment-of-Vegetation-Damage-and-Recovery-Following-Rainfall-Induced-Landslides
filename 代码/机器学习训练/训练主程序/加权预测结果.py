@@ -25,12 +25,16 @@ from sklearn.metrics import average_precision_score
 # =========================================================
 # 集成特定配置
 # =========================================================
-ENSEMBLE_OUT_DIR = os.path.join(CONFIG["MODELS_BASE_DIR"], "Ensemble_Final")
+ENSEMBLE_OUT_DIR = os.path.join(
+    CONFIG["LANDSLIDE_PRODUCTS_DIR"], "Data", "annual_probability_maps"
+)
 os.makedirs(ENSEMBLE_OUT_DIR, exist_ok=True)
 
-# 总评估输出文件夹
-ENSEMBLE_EVAL_DIR = os.path.join(ENSEMBLE_OUT_DIR, "Ensemble_Evaluation")
+# 评估表和预览图不属于公开滑坡产品，保存在训练结果目录。
+ENSEMBLE_EVAL_DIR = os.path.join(CONFIG["OUTPUT_DIR"], "Ensemble_Evaluation")
 os.makedirs(ENSEMBLE_EVAL_DIR, exist_ok=True)
+ENSEMBLE_PREVIEW_DIR = os.path.join(CONFIG["OUTPUT_DIR"], "Ensemble_Previews")
+os.makedirs(ENSEMBLE_PREVIEW_DIR, exist_ok=True)
 
 # SHAP 计算抽样参数：数据量过大时可适当调小
 MAX_SHAP_SAMPLE_PER_ALGO_YEAR = 1000
@@ -189,13 +193,13 @@ def run_ensemble(year_pair):
 
     out_tif_path = os.path.join(
         ENSEMBLE_OUT_DIR,
-        f"Ensemble_Final_{year_pair}.tif"
+        f"landslide_probability_{year_pair.replace('-', '_')}.tif"
     )
     with rasterio.open(out_tif_path, 'w', **meta) as dst:
         dst.write(ensemble_mean, 1)
 
     out_png_path = os.path.join(
-        ENSEMBLE_OUT_DIR,
+        ENSEMBLE_PREVIEW_DIR,
         f"Preview_{year_pair}.png"
     )
     plot_ensemble_result(

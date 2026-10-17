@@ -9,13 +9,13 @@ from plotly.offline import get_plotlyjs
 from plotly.subplots import make_subplots
 
 
-ROOT = Path(r"E:\python_base\Slide_dect")
-DID_DIR = ROOT / "Output" / "EcoService_DID"
+ROOT = Path(__file__).resolve().parents[2]
+DID_DIR = ROOT / "Output" / "EcologicalAnalysis"
 DID_RESULTS = DID_DIR / "04_did_results"
 AUDIT_DIR = DID_DIR / "06_snap_lai_qc_audit"
 OUT_DIR = DID_DIR / "07_change_tracking_storyboard"
 CHART_DIR = OUT_DIR / "charts"
-SNAP_SINGLE = ROOT / "Output" / "SNAP_Results" / "Biophysical_SingleBand"
+SNAP_SINGLE = ROOT / "Output" / "EcologicalProducts"
 
 OUTCOME_LABELS = {"LAI_SR2": "LAI", "FVC": "FVC", "FAPAR": "FAPAR"}
 OUTCOME_ORDER = ["LAI_SR2", "FVC", "FAPAR"]
@@ -278,7 +278,7 @@ def write_readme(key: pd.DataFrame) -> None:
         "",
         "## T49RFH",
         "",
-        "T49RFH 是多下载瓦片，已从 `Output\\SNAP_Results` 派生产品中删除；本版只看 T49RGH 的 8 景序列。",
+        "T49RFH 是多下载瓦片，已从 `Output\\EcologicalProducts` 派生产品中删除；本版只看 T49RGH 的 8 景序列。",
         "",
         "## 文件",
         "",

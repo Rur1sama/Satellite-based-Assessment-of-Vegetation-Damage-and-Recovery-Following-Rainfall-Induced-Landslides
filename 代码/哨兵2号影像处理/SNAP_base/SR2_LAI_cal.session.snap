@@ -1,0 +1,26 @@
+<session>
+  <modelVersion>1.0.0</modelVersion>
+  <products>
+    <product>
+      <refNo>1</refNo>
+      <uri>file:../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2A_MSIL2A_20181007T025601_N0500_R032_T49RFH_20230731T025957.zip</uri>
+      <productReaderPlugin>class eu.esa.opt.dataio.s2.ortho.plugins.Sentinel2L1CProduct_Multi_UTM49N_ReaderPlugIn</productReaderPlugin>
+    </product>
+    <product>
+      <refNo>2</refNo>
+      <uri>file:../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2A_MSIL2A_20181007T025601_N0500_R032_T49RGH_20230731T025957.zip</uri>
+      <productReaderPlugin>class eu.esa.opt.dataio.s2.ortho.plugins.Sentinel2L1CProduct_Multi_UTM49N_ReaderPlugIn</productReaderPlugin>
+    </product>
+    <product>
+      <refNo>3</refNo>
+      <uri>file:../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2B_MSIL2A_20241129T030009_N0511_R032_T49RGH_20241129T050437.zip</uri>
+      <productReaderPlugin>class eu.esa.opt.dataio.s2.ortho.plugins.Sentinel2L1CProduct_Multi_UTM49N_ReaderPlugIn</productReaderPlugin>
+    </product>
+    <product>
+      <refNo>4</refNo>
+      <uri>file:../../../Output/EcologicalProducts/LAI/LAI_20241129_N0511_R032_T49RGH_S2B_10m.tif</uri>
+      <productReaderPlugin>class org.esa.snap.dataio.gdal.reader.plugins.GTiffDriverProductReaderPlugIn</productReaderPlugin>
+    </product>
+  </products>
+  <views/>
+</session>

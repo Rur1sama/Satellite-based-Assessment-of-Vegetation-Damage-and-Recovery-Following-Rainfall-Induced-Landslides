@@ -40,14 +40,14 @@ def get_year_input_paths(year_pair):
     pre_year, post_year = "20" + year_pair.split("-")[0], "20" + year_pair.split("-")[1]
     pre_paths = glob.glob(os.path.join(CONFIG["OPTICAL_DIR"], f"SR2_{pre_year}*", "*.tif"))
     post_paths = glob.glob(os.path.join(CONFIG["OPTICAL_DIR"], f"SR2_{post_year}*", "*.tif"))
-    label_paths = glob.glob(os.path.join(CONFIG["LABEL_ROOT"], f"面{year_pair}", "*.shp"))
+    label_paths = glob.glob(os.path.join(CONFIG["LABEL_ROOT"], year_pair, "*.shp"))
 
     if not pre_paths:
         raise FileNotFoundError(f"未找到灾前年份光学影像: {pre_year}")
     if not post_paths:
         raise FileNotFoundError(f"未找到灾后年份光学影像: {post_year}")
     if not label_paths:
-        raise FileNotFoundError(f"未找到年份对标签文件: 面{year_pair}")
+        raise FileNotFoundError(f"未找到年份对标签文件: {year_pair}")
 
     return pre_year, post_year, pre_paths[0], post_paths[0], label_paths[0]
 

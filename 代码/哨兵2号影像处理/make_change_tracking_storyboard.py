@@ -12,13 +12,13 @@ import numpy as np
 import pandas as pd
 
 
-ROOT = Path(r"E:\python_base\Slide_dect")
-DID_DIR = ROOT / "Output" / "EcoService_DID"
+ROOT = Path(__file__).resolve().parents[2]
+DID_DIR = ROOT / "Output" / "EcologicalAnalysis"
 DID_RESULTS = DID_DIR / "04_did_results"
 AUDIT_DIR = DID_DIR / "06_snap_lai_qc_audit"
 OUT_DIR = DID_DIR / "07_change_tracking_storyboard"
 FIG_DIR = OUT_DIR / "figures"
-SNAP_SINGLE = ROOT / "Output" / "SNAP_Results" / "Biophysical_SingleBand"
+SNAP_SINGLE = ROOT / "Output" / "EcologicalProducts"
 
 OUTCOME_LABELS = {
     "LAI_SR2": "LAI",
@@ -300,7 +300,7 @@ def write_readme(path: Path, key_numbers: pd.DataFrame) -> None:
         "",
         "## T49RFH",
         "",
-        "T49RFH 是多下载的瓦片，已从 `Output\\SNAP_Results` 派生产品中删除；本版只看 T49RGH 的 2018-2025 序列。",
+        "T49RFH 是多下载的瓦片，已从 `Output\\EcologicalProducts` 派生产品中删除；本版只看 T49RGH 的 2018-2025 序列。",
         "",
     ]
     if not key_numbers.empty:

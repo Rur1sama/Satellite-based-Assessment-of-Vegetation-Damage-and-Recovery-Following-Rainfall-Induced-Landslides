@@ -5,21 +5,21 @@
 输入路径
 --------
 1. GLASS PAR 原始数据:
-   E:\Raster_data\GLASS\PAR\
+   Input/EcologicalAnalysis/ExampleData/Climate_GLASS_PAR/
 
 2. ERA5-Land Tmin / VPD / PAR / epsilon 数据:
-   E:\Raster_data\ERA5-Land\
+   Input/EcologicalAnalysis/ExampleData/Climate_ERA5Land/
 
 3. Sentinel-2 反演得到的单波段 FAPAR:
-   E:\python_base\Slide_dect\Output\SNAP_Results\Biophysical_SingleBand\FAPAR\
+   Output/EcologicalProducts/FAPAR/
 
-整理后的输入归档
-----------------
-E:\python_base\Slide_dect\Input\GPP_Daily_Inputs\
+整理后的本地输入缓存
+--------------------
+Input/EcologicalAnalysis/WorkingCache/GPP_DailyInputs/
 
 输出路径
 --------
-E:\python_base\Slide_dect\Input\反演GPP\
+Output/EcologicalProducts/GPP/
 
 主要公式
 --------
@@ -71,13 +71,14 @@ except ImportError:  # pragma: no cover - only used for a clear runtime error.
 
 # ==================== 路径配置 ====================
 
-PROJECT_ROOT = Path(r"E:\python_base\Slide_dect")
-GLASS_PAR_DIR = Path(r"E:\地理数据\Raster_data\GLASS\PAR")
-ERA5_LAND_DIR = Path(r"E:\地理数据\Raster_data\ERA5-Land")
-FAPAR_DIR = PROJECT_ROOT / r"Output\SNAP_Results\Biophysical_SingleBand\FAPAR"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+ECO_INPUT_DIR = PROJECT_ROOT / "Input" / "EcologicalAnalysis"
+GLASS_PAR_DIR = ECO_INPUT_DIR / "ExampleData" / "Climate_GLASS_PAR"
+ERA5_LAND_DIR = ECO_INPUT_DIR / "ExampleData" / "Climate_ERA5Land"
+FAPAR_DIR = PROJECT_ROOT / "Output" / "EcologicalProducts" / "FAPAR"
 
-INPUT_ARCHIVE_DIR = PROJECT_ROOT / r"Input\GPP_Daily_Inputs"
-OUTPUT_GPP_DIR = PROJECT_ROOT / r"Input\反演GPP"
+INPUT_ARCHIVE_DIR = ECO_INPUT_DIR / "WorkingCache" / "GPP_DailyInputs"
+OUTPUT_GPP_DIR = PROJECT_ROOT / "Output" / "EcologicalProducts" / "GPP"
 
 
 # ==================== 模型默认参数 ====================
@@ -268,7 +269,7 @@ def hardlink_or_copy(src: Path, dst: Path, mode: str) -> None:
 
 
 def archive_inputs(item: DateInputs, mode: str) -> None:
-    """把当天匹配到的输入文件整理到 Input/GPP_Daily_Inputs/date/。"""
+    """把当天匹配到的输入文件整理到 Input/EcologicalAnalysis/WorkingCache/GPP_DailyInputs/date/。"""
     if mode == "none":
         return
     date_dir = INPUT_ARCHIVE_DIR / item.date

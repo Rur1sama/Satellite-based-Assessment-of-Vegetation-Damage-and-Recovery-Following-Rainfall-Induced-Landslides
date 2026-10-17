@@ -12,6 +12,7 @@ Description   : CatBoost 训练
 
 import os
 import glob
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import rasterio
@@ -38,14 +39,16 @@ from pysheds.grid import Grid
 np.seterr(divide='ignore', invalid='ignore', over='ignore')
 
 # =========================================================
-# 配置
+# Repository-relative configuration for this legacy CatBoost workflow.
 # =========================================================
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+TRAINING_INPUT_DIR = PROJECT_ROOT / "Input" / "Training"
 CONFIG = {
-    "OPTICAL_DIR": r"E:\python_base\Slide_dect\Input\光学栅格",
-    "LABEL_ROOT": r"E:\python_base\Slide_dect\Input\样本面手动标注结果",
-    "DEM_PATH": r"E:\python_base\Slide_dect\Input\高程数据\ALOS_PALSAR_DEM.tif",
-    "GPM_DIR": r"E:\python_base\Slide_dect\Input\GPM_Time_Series",
-    "OUTPUT_DIR": r"E:\python_base\Slide_dect\Output\ML_Results\CatBoost", # 修改路径
+    "OPTICAL_DIR": str(TRAINING_INPUT_DIR / "ExampleData" / "OpticalImagery"),
+    "LABEL_ROOT": str(TRAINING_INPUT_DIR / "SamplePolygons"),
+    "DEM_PATH": str(TRAINING_INPUT_DIR / "ExampleData" / "Terrain" / "dem.tif"),
+    "GPM_DIR": str(TRAINING_INPUT_DIR / "ExampleData" / "Precipitation" / "GPM"),
+    "OUTPUT_DIR": str(PROJECT_ROOT / "Output" / "TrainingResults" / "Legacy" / "CatBoost"),
     "BANDS": {"RED": 4, "NIR": 8}
 }
 
@@ -226,7 +229,7 @@ def run_model(year_pair):
     pre_year, post_year = "20"+year_pair.split("-")[0], "20"+year_pair.split("-")[1]
     pre_path = glob.glob(os.path.join(CONFIG["OPTICAL_DIR"], f"SR2_{pre_year}*", "*.tif"))[0]
     post_path = glob.glob(os.path.join(CONFIG["OPTICAL_DIR"], f"SR2_{post_year}*", "*.tif"))[0]
-    label_path = glob.glob(os.path.join(CONFIG["LABEL_ROOT"], f"面{year_pair}", "*.shp"))[0]
+    label_path = glob.glob(os.path.join(CONFIG["LABEL_ROOT"], year_pair, "*.shp"))[0]
 
     with rasterio.open(post_path) as src:
         profile = src.profile.copy(); profile.update(count=1, dtype=rasterio.float32, nodata=np.nan)

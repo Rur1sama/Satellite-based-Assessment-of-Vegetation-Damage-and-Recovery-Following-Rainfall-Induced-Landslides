@@ -10,16 +10,22 @@ Lines         : 80
 """
 
 from utils.head import * # 导入所有头文件
+from pathlib import Path
 # =========================================================
 # 配置路径与参数
 # =========================================================
+PROJECT_ROOT = Path(__file__).resolve().parents[4]
+TRAINING_INPUT_DIR = PROJECT_ROOT / "Input" / "Training"
+TRAINING_OUTPUT_DIR = PROJECT_ROOT / "Output" / "TrainingResults"
+
 CONFIG = {
-    "OPTICAL_DIR": r"E:\python_base\Slide_dect\Input\光学栅格",
-    "DEM_PATH": r"E:\python_base\Slide_dect\Input\高程数据\ALOS_PALSAR_DEM.tif",
-    "GPM_DIR": r"E:\python_base\Slide_dect\Input\GPM_Time_Series",
-    "MODELS_BASE_DIR": r"E:\python_base\Slide_dect\Output\ML_Results",
-    "OUTPUT_DIR": r"E:\python_base\Slide_dect\Output",
-    "LABEL_ROOT": r"E:\python_base\Slide_dect\Input\样本面手动标注结果",
+    "OPTICAL_DIR": str(TRAINING_INPUT_DIR / "ExampleData" / "OpticalImagery"),
+    "DEM_PATH": str(TRAINING_INPUT_DIR / "ExampleData" / "Terrain" / "dem.tif"),
+    "GPM_DIR": str(TRAINING_INPUT_DIR / "ExampleData" / "Precipitation" / "GPM"),
+    "MODELS_BASE_DIR": str(TRAINING_OUTPUT_DIR / "Models"),
+    "OUTPUT_DIR": str(TRAINING_OUTPUT_DIR),
+    "LANDSLIDE_PRODUCTS_DIR": str(PROJECT_ROOT / "Output" / "LandslideProducts"),
+    "LABEL_ROOT": str(TRAINING_INPUT_DIR / "SamplePolygons"),
     "BANDS": {"RED": 4, "NIR": 8, "Green":3},
     "YEAR_PAIRS": ["18-19", "19-20", "20-21", "21-22", "22-23", "23-24", "24-25"],
     # "YEAR_PAIRS": ["21-22","23-24"],
@@ -63,7 +69,7 @@ def get_model_instance(algo_name):
     elif algo_name == "XGBoost":
         return xgb.XGBClassifier(objective='multi:softprob', num_class=3, n_estimators=200,
                              learning_rate=0.05, eval_metric='mlogloss', random_state=42, n_jobs=-1,
-                             tree_method='hist', device="cuda")
+                             tree_method='hist', device="cpu")
     elif algo_name == "CatBoost":
         return CatBoostClassifier(loss_function='MultiClass', iterations=200, learning_rate=0.05,
                                   verbose=0, random_state=42, thread_count=-1)

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project name="SR2_LAI_cal">
+  <subFolder name="ProductSets" />
+  <subFolder name="Graphs">
+    <product path="Graphs/myBiophysical10mOp.xml" name="myBiophysical10mOp.xml" />
+  </subFolder>
+  <subFolder name="External Product Links">
+    <subFolder name="SENTINEL-2-MSI-MultiRes-UTM49N">
+      <product path="../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2A_MSIL2A_20181007T025601_N0500_R032_T49RGH_20230731T025957.zip" name="S2A_MSIL2A_20181007T025601_N0500_R032_T49RGH_20230731T025957" />
+      <product path="../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2A_MSIL2A_20211210T030121_N0500_R032_T49RGH_20221229T154257.zip" name="S2A_MSIL2A_20211210T030121_N0500_R032_T49RGH_20221229T154257" />
+      <product path="../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2A_MSIL2A_20221225T030131_N0510_R032_T49RGH_20240806T144627.zip" name="S2A_MSIL2A_20221225T030131_N0510_R032_T49RGH_20240806T144627" />
+      <product path="../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2A_MSIL2A_20231120T030021_N0510_R032_T49RGH_20241109T085412.zip" name="S2A_MSIL2A_20231120T030021_N0510_R032_T49RGH_20241109T085412" />
+      <product path="../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2A_MSIL2A_20251121T030151_N0511_R032_T49RGH_20251121T071814.zip" name="S2A_MSIL2A_20251121T030151_N0511_R032_T49RGH_20251121T071814" />
+      <product path="../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2B_MSIL2A_20191206T030109_N0500_R032_T49RGH_20230614T132356.zip" name="S2B_MSIL2A_20191206T030109_N0500_R032_T49RGH_20230614T132356" />
+      <product path="../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2B_MSIL2A_20201110T025939_N0500_R032_T49RGH_20230404T102738.zip" name="S2B_MSIL2A_20201110T025939_N0500_R032_T49RGH_20230404T102738" />
+      <product path="../../../Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/S2B_MSIL2A_20241129T030009_N0511_R032_T49RGH_20241129T050437.zip" name="S2B_MSIL2A_20241129T030009_N0511_R032_T49RGH_20241129T050437" />
+    </subFolder>
+    <subFolder name="GDAL-GTiff-READER">
+      <product path="../../../Output/EcologicalProducts/LAI/LAI_20241129_N0511_R032_T49RGH_S2B_10m.tif" name="LAI_20241129_N0511_R032_T49RGH_S2B_10m.tif" />
+    </subFolder>
+  </subFolder>
+  <subFolder name="Imported Products" />
+  <subFolder name="Processed Products">
+    <subFolder name="Calibrated Products" user="true" />
+    <subFolder name="Coregistered Products" user="true" />
+    <subFolder name="Orthorectified Products" user="true" />
+  </subFolder>
+</Project>
