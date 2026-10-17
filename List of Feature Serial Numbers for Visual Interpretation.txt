@@ -1,0 +1,9 @@
+0 Apart from all the factors mentioned below, changes in NDVI may be caused by fallen trees or natural mortality.
+1 Landslide.
+2 Mountain roads; due to vegetation being stripped away by extreme rainfall, this is also reclassified as Category 1 (minor landslide);
+3 Buildings or impervious surfaces.
+4 A landslide had already occurred previously; the current view shows the development of the landslide edge.
+5 Vegetation along riverbanks, farmlands, and water bodies is being eroded.
+6 Human-caused deforestation.
+7 To Be Determined.
+8 Water body.
