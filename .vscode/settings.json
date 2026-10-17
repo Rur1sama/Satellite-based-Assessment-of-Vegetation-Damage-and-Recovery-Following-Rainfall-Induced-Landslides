@@ -1,0 +1,6 @@
+{
+    "cmake.sourceDirectory": "E:/python_base/Slide_dect/ultralytics-main/examples/YOLO11-Triton-CPP",
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "git.ignoreLimitWarning": true
+}

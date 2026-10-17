@@ -1,0 +1,150 @@
+{
+  "project_root": "E:/python_base/Slide_dect",
+  "output_dir": "E:/python_base/Slide_dect/Output/EcoService_DID",
+  "analysis_crs": null,
+  "study_area_path": "E:/python_base/Slide_dect/Input/Jiangwan/Jiangwan.shp",
+  "skip_missing_rasters": true,
+  "landslide": {
+    "mask_threshold": 0.8,
+    "connectivity": 8,
+    "min_landslide_area_m2": 100, 
+    "events_output": "E:/python_base/Slide_dect/Output/EcoService_DID/01_landslide_events.gpkg",
+    "glob_pattern": "E:/python_base/Slide_dect/Output/ML_Results/Ensemble_Final/Ensemble_Final_{year_pre}-{year_post}.tif",
+    "year_pairs": ["18-19", "19-20", "20-21", "21-22", "22-23", "23-24", "24-25"]
+  },
+  "zones": {
+    "zones_output": "E:/python_base/Slide_dect/Output/EcoService_DID/02_landslide_zones.gpkg",
+    "spillover_rings_m": [
+      [0, 10],
+      [10, 20]
+    ],
+    "make_never_control_zones": true,
+    "make_core_inner_zone": false,
+    "core_inner_erosion_m": 5,
+    "core_inner_zone_name": "core_inner",
+    "never_control_ring_m": [200, 1000],
+    "exclude_all_landslide_polygons_from_rings": true,
+    "min_zone_area_m2": 20
+  },
+  "outcomes": {
+    "LAI_SR2": {
+      "enabled": true,
+      "glob_pattern": "E:/python_base/Slide_dect/Output/SNAP_Results/Biophysical_SingleBand/LAI/LAI_{year}????_*_*_*_S2*_10m.tif",
+      "year_regex": "LAI_(\\d{4})\\d{4}_.*_S2.*_10m\\.tif$",
+      "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+      "band": 1,
+      "scale": 1.0,
+      "offset": 0.0,
+      "unit": "LAI_SR2"
+    },
+    "FVC": {
+      "enabled": true,
+      "glob_pattern": "E:/python_base/Slide_dect/Output/SNAP_Results/Biophysical_SingleBand/FVC/FVC_{year}????_*_*_*_S2*_10m.tif",
+      "year_regex": "FVC_(\\d{4})\\d{4}_.*_S2.*_10m\\.tif$",
+      "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+      "band": 1,
+      "scale": 1.0,
+      "offset": 0.0,
+      "unit": "FVC"
+    },
+    "FAPAR": {
+      "enabled": false,
+      "glob_pattern": "E:/python_base/Slide_dect/Output/SNAP_Results/Biophysical_SingleBand/FAPAR/FAPAR_{year}????_*_*_*_S2*_10m.tif",
+      "year_regex": "FAPAR_(\\d{4})\\d{4}_.*_S2.*_10m\\.tif$",
+      "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+      "band": 1,
+      "scale": 1.0,
+      "offset": 0.0,
+      "unit": "FAPAR"
+    },
+    "GPP": {
+      "enabled": true,
+      "glob_pattern": "E:/python_base/Slide_dect/Input/反演GPP/GPP_{year}????_existing_epsilon_kgC_m2_day.tif",
+      "year_regex": "GPP_(\\d{4})\\d{4}_existing_epsilon_kgC_m2_day\\.tif$",
+      "years": [2018, 2019, 2020, 2021, 2022, 2023, 2024, 2025],
+      "band": 1,
+      "all_touched": false,
+      "scale": 1.0,
+      "offset": 0.0,
+      "unit": "kgC m-2 day-1",
+      "effect_scale_to_total": 0.001,
+      "total_effect_unit": "MgC day-1"
+    },
+    "VOD": {
+      "enabled": false,
+      "path_template": "E:/python_base/Slide_dect/Input/VOD/VOD_{year}.tif",
+      "years": [2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021],
+      "band": 1,
+      "scale": 1.0,
+      "offset": 0.0,
+      "unit": "VOD"
+    }
+  },
+  "panel": {
+    "panel_output": "E:/python_base/Slide_dect/Output/EcoService_DID/03_zone_outcome_panel.csv",
+    "extraction_cache_dir": "E:/python_base/Slide_dect/Output/EcoService_DID/03_zone_outcome_panel_outcome_year_cache",
+    "use_cache": true,
+    "incremental_on_force": false,
+    "all_touched": false,
+    "min_valid_pixels": 1
+  },
+  "analysis_scope": {
+    "treated_zones": ["core", "ring_0_10m", "ring_10_20m"],
+    "skip_radiation_profiles": false
+  },
+  "did": {
+    "results_dir": "E:/python_base/Slide_dect/Output/EcoService_DID/04_did_results",
+    "value_column": "mean",
+    "reference_relative_year": -1,
+    "event_window": [-2, 5],
+    "control_group": "not_yet_plus_never",
+    "min_treated_units": 1,
+    "min_control_units": 1,
+    "pretrend_match_never_control": true,
+    "pretrend_match_threshold": 0.1,
+    "pretrend_match_source_zone": "core",
+    "pretrend_match_min_years": 1,
+    "pretrend_match_empty_action": "nearest",
+    "pretrend_match_nearest_fraction": 0.05,
+    "pretrend_match_nearest_min_units": 20,
+    "alpha": 0.05,
+    "radiation_post_years": [0, 1, 2]
+  },
+  "plots": {
+    "figures_dir": "E:/python_base/Slide_dect/Output/EcoService_DID/05_figures",
+    "legacy_dashboards": false,
+    "plot_relative_years": [-2, -1, 0, 1, 2, 3, 4, 5],
+    "area_size_figures": []
+  },
+  "recovery": {
+    "slope_raster_path": "E:/python_base/Slide_dect/Output/Slope.tif",
+    "slope_all_touched": false
+  },
+  "core_size_comparison":
+  {
+    "enabled": true,
+    "class_method": "area_threshold",
+    "output_prefix": "core_size",
+    "size_response_zone_name": "core",
+    "zone_name": "core",
+    "zone_names": ["core"],
+    "weighted_zone_name": "core_weighted",
+    "weighted_core_inner_weight": 0.8,
+    "weighted_core_edge_weight": 0.2,
+    "area_threshold_m2": 1000,
+    "small_label": "small",
+    "large_label": "large"
+  },
+  "geometry_inner_comparison": {
+    "enabled": false,
+    "class_method": "inner_availability",
+    "zone_names": ["core", "core_weighted", "core_inner"],
+    "inner_zone_name": "core_inner",
+    "weighted_zone_name": "core_weighted",
+    "weighted_core_inner_weight": 0.8,
+    "weighted_core_edge_weight": 0.2,
+    "output_prefix": "geometry_inner",
+    "small_label": "no_inner_small",
+    "large_label": "inner_available_large"
+  }
+}
