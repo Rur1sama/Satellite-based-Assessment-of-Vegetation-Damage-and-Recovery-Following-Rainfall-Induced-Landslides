@@ -1,6 +1,6 @@
 # 基于卫星的降雨诱发滑坡植被损伤与恢复评估
 
-[English](Readme.md) | [简体中文](README_zh.md)
+[English](Readme.md) | [简体中文](Readme_zh.md)
 
 本项目提供中国南方江湾镇的降雨诱发滑坡制图，以及滑坡后植被损伤与恢复评估代码。工作流程分为两部分：滑坡模型训练和生态影响分析；研究覆盖 2018–2019 至 2024–2025 的 7 个年度影像对。
 
@@ -54,10 +54,12 @@ python -m pip install -r requirements.txt
 │   │   └── GPP/*.tif
 │   ├── TrainingResults/
 │   └── EcologicalAnalysis/
-├── 代码/
-│   ├── 机器学习训练/训练主程序/
-│   ├── 生态服务分析/
-│   └── 哨兵2号影像处理/
+├── code/
+│   ├── Model training and landslide mapping/
+│   │   ├── Training workflow/
+│   │   └── Legacy scripts/
+│   ├── Ecological-impact and recovery analysis/
+│   └── Sentinel-2 Image Processing/
 │       ├── SNAP_base/
 │       │   ├── Graphs/myBiophysical10mOp.xml
 │       │   ├── SR2_LAI_cal.xml
@@ -68,7 +70,7 @@ python -m pip install -r requirements.txt
 └── LICENSE
 ```
 
-生态分析配置会从 `Output/EcologicalProducts/` 读取 FVC、LAI 和 GPP；从 `Input/EcologicalAnalysis/ExampleData/` 读取研究区边界和坡度栅格。SNAP 图和项目配置统一保存在影像处理代码目录 `代码/哨兵2号影像处理/SNAP_base/`；Sentinel-2 原始影像仍放在 `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`。FAPAR 虽已保存在产品目录中，但示例配置默认不将其作为分析指标；VOD 也默认关闭。运行前请阅读[模型训练说明](代码/机器学习训练/Readme_zh.md)、[生态分析说明](代码/生态服务分析/Readme_zh.md)和[Sentinel-2 影像处理说明](代码/哨兵2号影像处理/README.md)。
+生态分析配置会从 `Output/EcologicalProducts/` 读取 FVC、LAI 和 GPP；从 `Input/EcologicalAnalysis/ExampleData/` 读取研究区边界和坡度栅格。SNAP 图和项目配置统一保存在影像处理代码目录 `code/Sentinel-2 Image Processing/SNAP_base/`；Sentinel-2 原始影像仍放在 `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`。FAPAR 虽已保存在产品目录中，但示例配置默认不将其作为分析指标；VOD 也默认关闭。运行前请阅读[模型训练说明](<code/Model training and landslide mapping/Readme_zh.md>)、[生态分析说明](<code/Ecological-impact and recovery analysis/Readme_zh.md>)和[Sentinel-2 影像处理说明](<code/Sentinel-2 Image Processing/README.md>)。
 
 ## 3. 运行流程
 
@@ -77,22 +79,22 @@ python -m pip install -r requirements.txt
 **模型训练与滑坡制图**
 
 ```powershell
-cd "代码\机器学习训练\训练主程序"
-python "训练主程序.py"
-python "加权预测结果.py"
+cd "code\Model training and landslide mapping\Training workflow"
+python "Main.py"
+python "weighted_ensemble.py"
 ```
 
-第一个脚本对 7 个年度影像对训练 4 种分类器；第二个脚本对分类结果进行等权集成，并生成年度概率图。阈值敏感性分析和 SHAP 分析等可选脚本见[模型训练说明](代码/机器学习训练/Readme_zh.md)。
+第一个脚本对 7 个年度影像对训练 4 种分类器；第二个脚本对分类结果进行等权集成，并生成年度概率图。阈值敏感性分析和 SHAP 分析等可选脚本见[模型训练说明](<code/Model training and landslide mapping/Readme_zh.md>)。
 
 **生态影响与恢复分析**
 
 ```powershell
-cd "代码\生态服务分析"
+cd "code\Ecological-impact and recovery analysis"
 python run_pipeline.py --help
 python run_pipeline.py --config config_example.json --steps all
 ```
 
-`--help` 会显示可用的分析阶段和参数；完整参数解释和各阶段说明见[生态分析说明](代码/生态服务分析/Readme_zh.md)。
+`--help` 会显示可用的分析阶段和参数；完整参数解释和各阶段说明见[生态分析说明](<code/Ecological-impact and recovery analysis/Readme_zh.md>)。
 
 ## 4. 查看输出结果
 

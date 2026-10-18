@@ -18,17 +18,17 @@
 /Output/EcologicalAnalysis/
 /ultralytics-main/
 /weights/
-/杂项/
+/Miscellaneous/
 /DeepLabV3+/
-/应用/
+/Applications/
 
 /catboost_info/*
 /catboost_info/
-/哨兵1号影像处理/
+/Sentinel-1 Image Processing/
 
 /sentinel1_landslide/
 
-/手动标签数据验证序号表.txt/
+/manual_label_validation_serials.txt
 
 /.codex/
 /.codex_runtime/
@@ -36,11 +36,11 @@
 /.agents/
 /sentinel1_landslide/
 
-/代码/机器学习训练/交互项消融/
-/代码/机器学习训练/抽样稳健性/
+/code/Model training and landslide mapping/interaction_ablation/
+/code/Model training and landslide mapping/sampling_robustness/
 
 __pycache__/
 
 # Local deployment credentials/configuration
 .vscode/sftp.json
-/代码/哨兵1号影像处理/
+/code/Sentinel-1 Image Processing/

@@ -1,6 +1,6 @@
 # Satellite-based Assessment of Vegetation Damage and Recovery Following Rainfall-Induced Landslides
 
-[English](Readme.md) | [简体中文](README_zh.md)
+[English](Readme.md) | [简体中文](Readme_zh.md)
 
 This repository contains the code and selected project products for mapping rainfall-induced landslides and assessing vegetation damage and recovery in Jiangwan Town, southern China. The workflow has two main parts: landslide model training and ecological-impact analysis. The project covers seven annual image pairs (2018–2019 to 2024–2025).
 
@@ -54,10 +54,12 @@ The seven manually interpreted sample-polygon sets are included. Other source in
 │   │   └── GPP/*.tif
 │   ├── TrainingResults/
 │   └── EcologicalAnalysis/
-├── 代码/ # Code for running the structure
-│   ├── 机器学习训练/训练主程序/
-│   ├── 生态服务分析/
-│   └── 哨兵2号影像处理/
+├── code/ # Workflow source code
+│   ├── Model training and landslide mapping/
+│   │   ├── Training workflow/
+│   │   └── Legacy scripts/
+│   ├── Ecological-impact and recovery analysis/
+│   └── Sentinel-2 Image Processing/
 │       ├── SNAP_base/
 │       │   ├── Graphs/myBiophysical10mOp.xml
 │       │   ├── SR2_LAI_cal.xml
@@ -68,7 +70,7 @@ The seven manually interpreted sample-polygon sets are included. Other source in
 └── LICENSE
 ```
 
-The ecological-analysis configuration reads FVC, LAI and GPP from `Output/EcologicalProducts/`; the study-area boundary and slope raster are read from `Input/EcologicalAnalysis/ExampleData/`. The SNAP graph and project configuration are kept with the image-processing code under `代码/哨兵2号影像处理/SNAP_base/`; Sentinel-2 source scenes remain under `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`. FAPAR is retained as a product but is disabled as an analysis outcome in the example configuration. VOD is also disabled by default. See the guides for [model training](代码/机器学习训练/Readme.md), [ecological analysis](代码/生态服务分析/Readme.md) and [Sentinel-2 processing](代码/哨兵2号影像处理/README.md). Chinese guides are available as [model training](代码/机器学习训练/Readme_zh.md) and [ecological analysis](代码/生态服务分析/Readme_zh.md).
+The ecological-analysis configuration reads FVC, LAI and GPP from `Output/EcologicalProducts/`; the study-area boundary and slope raster are read from `Input/EcologicalAnalysis/ExampleData/`. The SNAP graph and project configuration are kept with the image-processing code under `code/Sentinel-2 Image Processing/SNAP_base/`; Sentinel-2 source scenes remain under `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`. FAPAR is retained as a product but is disabled as an analysis outcome in the example configuration. VOD is also disabled by default. See the guides for [model training](<code/Model training and landslide mapping/Readme.md>), [ecological analysis](<code/Ecological-impact and recovery analysis/Readme.md>) and [Sentinel-2 processing](<code/Sentinel-2 Image Processing/README.md>). Chinese guides are available as [model training](<code/Model training and landslide mapping/Readme_zh.md>) and [ecological analysis](<code/Ecological-impact and recovery analysis/Readme_zh.md>).
 
 ## 3. Run the workflows
 
@@ -77,22 +79,22 @@ Run the two parts separately from their respective code directories.
 **Model training and landslide mapping**
 
 ```powershell
-cd "代码\机器学习训练\训练主程序"
-python "训练主程序.py"
-python "加权预测结果.py"
+cd "code\Model training and landslide mapping\Training workflow"
+python "Main.py"
+python "weighted_ensemble.py"
 ```
 
-The first script trains the four classifiers across the seven image pairs. The second combines their predictions and writes the annual probability maps. See the [model-training guide](代码/机器学习训练/Readme.md) for optional threshold-sensitivity and SHAP commands.
+The first script trains the four classifiers across the seven image pairs. The second combines their predictions and writes the annual probability maps. See the [model-training guide](<code/Model training and landslide mapping/Readme.md>) for optional threshold-sensitivity and SHAP commands.
 
 **Ecological-impact and recovery analysis**
 
 ```powershell
-cd "代码\生态服务分析"
+cd "code\Ecological-impact and recovery analysis"
 python run_pipeline.py --help
 python run_pipeline.py --config config_example.json --steps all
 ```
 
-The help command lists the available stages and options. The [ecological-analysis guide](代码/生态服务分析/Readme.md) reproduces those options and explains each stage.
+The help command lists the available stages and options. The [ecological-analysis guide](<code/Ecological-impact and recovery analysis/Readme.md>) reproduces those options and explains each stage.
 
 ## 4. Find the outputs
 
