@@ -68,7 +68,7 @@ python -m pip install -r requirements.txt
 └── LICENSE
 ```
 
-生态分析配置会从 `Output/EcologicalProducts/` 读取 FVC、LAI 和 GPP；从 `Input/EcologicalAnalysis/ExampleData/` 读取研究区边界和坡度栅格。SNAP 图和项目配置统一保存在影像处理代码目录 `代码/哨兵2号影像处理/SNAP_base/`；Sentinel-2 原始影像仍放在 `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`。FAPAR 虽已保存在产品目录中，但示例配置默认不将其作为分析指标；VOD 也默认关闭。运行前请阅读[模型训练说明](代码/机器学习训练/README.md)、[生态分析说明](代码/生态服务分析/README.md)和[Sentinel-2 影像处理说明](代码/哨兵2号影像处理/README.md)。
+生态分析配置会从 `Output/EcologicalProducts/` 读取 FVC、LAI 和 GPP；从 `Input/EcologicalAnalysis/ExampleData/` 读取研究区边界和坡度栅格。SNAP 图和项目配置统一保存在影像处理代码目录 `代码/哨兵2号影像处理/SNAP_base/`；Sentinel-2 原始影像仍放在 `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`。FAPAR 虽已保存在产品目录中，但示例配置默认不将其作为分析指标；VOD 也默认关闭。运行前请阅读[模型训练说明](代码/机器学习训练/Readme_zh.md)、[生态分析说明](代码/生态服务分析/Readme_zh.md)和[Sentinel-2 影像处理说明](代码/哨兵2号影像处理/README.md)。
 
 ## 3. 运行流程
 
@@ -82,7 +82,7 @@ python "训练主程序.py"
 python "加权预测结果.py"
 ```
 
-第一个脚本对 7 个年度影像对训练 4 种分类器；第二个脚本对分类结果进行等权集成，并生成年度概率图。阈值敏感性分析和 SHAP 分析等可选脚本见[模型训练说明](代码/机器学习训练/README.md)。
+第一个脚本对 7 个年度影像对训练 4 种分类器；第二个脚本对分类结果进行等权集成，并生成年度概率图。阈值敏感性分析和 SHAP 分析等可选脚本见[模型训练说明](代码/机器学习训练/Readme_zh.md)。
 
 **生态影响与恢复分析**
 
@@ -92,7 +92,7 @@ python run_pipeline.py --help
 python run_pipeline.py --config config_example.json --steps all
 ```
 
-`--help` 会显示可用的分析阶段和参数；完整参数解释和各阶段说明见[生态分析说明](代码/生态服务分析/README.md)。
+`--help` 会显示可用的分析阶段和参数；完整参数解释和各阶段说明见[生态分析说明](代码/生态服务分析/Readme_zh.md)。
 
 ## 4. 查看输出结果
 

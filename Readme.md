@@ -68,7 +68,7 @@ The seven manually interpreted sample-polygon sets are included. Other source in
 └── LICENSE
 ```
 
-The ecological-analysis configuration reads FVC, LAI and GPP from `Output/EcologicalProducts/`; the study-area boundary and slope raster are read from `Input/EcologicalAnalysis/ExampleData/`. The SNAP graph and project configuration are kept with the image-processing code under `代码/哨兵2号影像处理/SNAP_base/`; Sentinel-2 source scenes remain under `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`. FAPAR is retained as a product but is disabled as an analysis outcome in the example configuration. VOD is also disabled by default. See the guides for [model training](代码/机器学习训练/README.md), [ecological analysis](代码/生态服务分析/README.md) and [Sentinel-2 processing](代码/哨兵2号影像处理/README.md).
+The ecological-analysis configuration reads FVC, LAI and GPP from `Output/EcologicalProducts/`; the study-area boundary and slope raster are read from `Input/EcologicalAnalysis/ExampleData/`. The SNAP graph and project configuration are kept with the image-processing code under `代码/哨兵2号影像处理/SNAP_base/`; Sentinel-2 source scenes remain under `Input/EcologicalAnalysis/ExampleData/Sentinel2L2A/`. FAPAR is retained as a product but is disabled as an analysis outcome in the example configuration. VOD is also disabled by default. See the guides for [model training](代码/机器学习训练/Readme.md), [ecological analysis](代码/生态服务分析/Readme.md) and [Sentinel-2 processing](代码/哨兵2号影像处理/README.md). Chinese guides are available as [model training](代码/机器学习训练/Readme_zh.md) and [ecological analysis](代码/生态服务分析/Readme_zh.md).
 
 ## 3. Run the workflows
 
@@ -82,7 +82,7 @@ python "训练主程序.py"
 python "加权预测结果.py"
 ```
 
-The first script trains the four classifiers across the seven image pairs. The second combines their predictions and writes the annual probability maps. See the [model-training guide](代码/机器学习训练/README.md) for optional threshold-sensitivity and SHAP commands.
+The first script trains the four classifiers across the seven image pairs. The second combines their predictions and writes the annual probability maps. See the [model-training guide](代码/机器学习训练/Readme.md) for optional threshold-sensitivity and SHAP commands.
 
 **Ecological-impact and recovery analysis**
 
@@ -92,7 +92,7 @@ python run_pipeline.py --help
 python run_pipeline.py --config config_example.json --steps all
 ```
 
-The help command lists the available stages and options. The [ecological-analysis guide](代码/生态服务分析/README.md) reproduces those options and explains each stage.
+The help command lists the available stages and options. The [ecological-analysis guide](代码/生态服务分析/Readme.md) reproduces those options and explains each stage.
 
 ## 4. Find the outputs
 
