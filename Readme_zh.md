@@ -2,6 +2,8 @@
 
 [English](Readme.md) | [简体中文](Readme_zh.md)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23447197.svg)](https://doi.org/10.5281/zenodo.23447197)
+
 本项目提供中国南方江湾镇的降雨诱发滑坡制图，以及滑坡后植被损伤与恢复评估代码。工作流程分为两部分：滑坡模型训练和生态影响分析；研究覆盖 2018–2019 至 2024–2025 的 7 个年度影像对。
 
 ## 1. 配置环境
@@ -101,6 +103,6 @@ python run_pipeline.py --config config_example.json --steps all
 - 滑坡矢量清单和 7 期年度概率图位于 `Output/LandslideProducts/Data/`。
 - 模型、验证图、阈值分析和中间结果写入 `Output/TrainingResults/`。
 - 生态分析表格和图件写入 `Output/EcologicalAnalysis/`。
-- FVC、LAI、FAPAR、GPP 各 8 期栅格保存在本地 `Output/EcologicalProducts/`。这些大体量栅格已从 Git 中排除，应通过配套公共数据集发布。本次 README 更新没有将数据上传到公共仓库。
+- FVC、LAI、FAPAR、GPP 各 8 期栅格保存在本地 `Output/EcologicalProducts/`，并已从 Git 中排除。相关代码与数据版本已存档至 Zenodo（[DOI：10.5281/zenodo.23447197](https://doi.org/10.5281/zenodo.23447197)）；具体收录的产品以 Zenodo 记录页的文件清单为准。
 
-公开发布前，请确认产品和第三方输入数据的再分发许可及元数据。代码许可见 [LICENSE](LICENSE)。
+更新后续版本前，请确认产品和第三方输入数据的再分发许可及元数据。代码许可见 [LICENSE](LICENSE)。

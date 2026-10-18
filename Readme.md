@@ -2,6 +2,8 @@
 
 [English](Readme.md) | [简体中文](Readme_zh.md)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23447197.svg)](https://doi.org/10.5281/zenodo.23447197)
+
 This repository contains the code and selected project products for mapping rainfall-induced landslides and assessing vegetation damage and recovery in Jiangwan Town, southern China. The workflow has two main parts: landslide model training and ecological-impact analysis. The project covers seven annual image pairs (2018–2019 to 2024–2025).
 
 ## 1. Configure the environment
@@ -101,6 +103,6 @@ The help command lists the available stages and options. The [ecological-analysi
 - The landslide inventory and seven annual probability maps are in `Output/LandslideProducts/Data/`.
 - Model fits, validation plots, threshold analyses and related intermediate results are written under `Output/TrainingResults/`.
 - Ecological-analysis tables and figures are written under `Output/EcologicalAnalysis/`.
-- Eight-date FVC, LAI, FAPAR and GPP rasters are retained locally under `Output/EcologicalProducts/`. These large rasters are excluded from Git and should be deposited with the associated public data record. The landslide products are present in the local release folder, but no data have been uploaded by this README update.
+- Eight-date FVC, LAI, FAPAR and GPP rasters are retained locally under `Output/EcologicalProducts/` and excluded from Git. The associated code-and-data release is archived on Zenodo ([DOI: 10.5281/zenodo.23447197](https://doi.org/10.5281/zenodo.23447197)). See the Zenodo record's file list for the exact products included in the archived release.
 
-Before public release, confirm redistribution rights and metadata for all products and third-party inputs. See [LICENSE](LICENSE) for code licensing information.
+For future release updates, confirm redistribution rights and metadata for all products and third-party inputs. See [LICENSE](LICENSE) for code licensing information.
